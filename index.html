@@ -13,6 +13,7 @@
     .luma-intro{position:fixed;inset:0;z-index:10;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;transition:opacity .45s,visibility .45s}.luma-intro.hidden{opacity:0;visibility:hidden;pointer-events:none}.luma-intro .eyebrow{margin-bottom:22px}.luma-intro h1{font-size:clamp(54px,9vw,112px);line-height:.9;letter-spacing:-.08em;margin:0 0 27px}.luma-intro h1 em{font-style:normal;color:var(--aqua)}.intro-copy{max-width:445px;color:#b3b8b1;line-height:1.65;font-size:16px;margin:0}.intro-actions{display:flex;align-items:center;gap:25px;margin-top:30px}.intro-note{font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:var(--muted);margin-top:52px}.intro-orbit{width:102px;height:102px;border:1px solid var(--aqua);border-radius:50%;display:grid;place-items:center;margin-bottom:34px;box-shadow:0 0 45px rgba(139,227,209,.12);animation:float-orbit 3s ease-in-out infinite}.intro-spark{font-size:35px;color:var(--yellow)}.luma-says{display:flex;justify-content:center;align-items:center;gap:12px;min-height:32px;padding:7px 13px;margin:0 0 15px;background:rgba(139,227,209,.06);border-left:2px solid var(--aqua)}.luma-says-label{font-family:var(--mono);font-size:8px;letter-spacing:.13em;color:var(--aqua)}.luma-says strong{font-size:12px;color:var(--paper)}@keyframes float-orbit{50%{transform:translateY(-8px) rotate(8deg)}}@media(max-width:800px){.luma-says{align-items:flex-start;flex-direction:column;gap:4px}.intro-copy{font-size:14px}}
     .robot-greeting{position:relative;width:178px;height:175px;margin-bottom:29px;animation:robot-float 3.2s ease-in-out infinite}.speech-bubble{position:absolute;right:-102px;top:-14px;background:var(--paper);color:var(--ink);padding:10px 13px;border-radius:3px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;font-weight:500;box-shadow:7px 7px 0 var(--coral);animation:bubble-pop 3.2s ease-in-out infinite}.speech-bubble:after{content:'';position:absolute;left:18px;bottom:-9px;border-width:9px 9px 0 0;border-style:solid;border-color:var(--paper) transparent transparent transparent}.robot-antenna{position:absolute;left:84px;top:0;width:2px;height:25px;background:var(--aqua)}.robot-antenna i{position:absolute;width:10px;height:10px;left:-4px;top:-6px;border-radius:50%;background:var(--yellow);box-shadow:0 0 15px var(--yellow)}.robot-head{position:absolute;left:27px;top:24px;width:124px;height:88px;border:2px solid var(--aqua);border-radius:25px 25px 31px 31px;background:var(--ink-soft);display:flex;justify-content:center;gap:35px;padding-top:29px;box-shadow:inset 0 -8px 0 rgba(139,227,209,.06)}.robot-eye{width:13px;height:18px;background:var(--yellow);border-radius:50%;box-shadow:0 0 12px rgba(249,200,74,.7);animation:blink 4s infinite}.robot-head b{position:absolute;left:45px;bottom:14px;width:31px;height:11px;border-bottom:2px solid var(--coral);border-radius:50%}.robot-neck{position:absolute;left:77px;top:112px;width:25px;height:16px;background:var(--aqua)}.robot-body{position:absolute;left:42px;top:125px;width:94px;height:50px;border:2px solid var(--coral);border-radius:17px 17px 9px 9px;background:var(--ink-soft);display:flex;align-items:center;justify-content:center;gap:7px}.robot-body span{width:7px;height:7px;border-radius:50%;background:var(--aqua)}.robot-body span:nth-child(2){background:var(--yellow);width:11px;height:11px}.robot-body span:nth-child(3){background:var(--coral)}@keyframes robot-float{50%{transform:translateY(-6px)}}@keyframes bubble-pop{50%{transform:translate(3px,-3px)}}@keyframes blink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.12)}}@media(max-width:800px){.robot-greeting{margin-left:-45px}.speech-bubble{right:-86px;font-size:9px}}
     .robot-greeting{flex:0 0 175px;z-index:1}.luma-intro .eyebrow,.luma-intro h1,.luma-intro .intro-copy,.luma-intro .intro-actions,.luma-intro .intro-note{position:relative;z-index:2}.game-guide{display:grid;grid-template-columns:1.05fr repeat(3,1fr);gap:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 0 36px}.guide-intro h2{font-size:26px;line-height:1;letter-spacing:-.06em;margin:0}.guide-step{border-left:1px solid var(--line);padding-left:19px}.guide-step span{font-family:var(--mono);font-size:10px;color:var(--yellow);letter-spacing:.1em}.guide-step h3{font-size:15px;margin:15px 0 8px}.guide-step p{font-size:12px;line-height:1.55;color:#aeb4ad;margin:0;max-width:205px}@media(max-width:800px){.game-guide{grid-template-columns:1fr;gap:22px}.guide-step{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}.guide-step h3{margin:8px 0 6px}.guide-step p{max-width:none}}
+    .hand-label{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px}.user-orb+.pod-name{color:var(--coral)}.bot-orb+.pod-name{color:var(--aqua)}
   </style>
 </head>
 <body>
@@ -63,7 +64,7 @@
 
       <section class="game-guide" id="gameGuide" aria-labelledby="guideTitle">
         <div class="guide-intro"><p class="eyebrow">QUICK BRIEFING</p><h2 id="guideTitle">How to play<br>with Luma</h2></div>
-        <div class="guide-step"><span>01</span><h3>Make a move</h3><p>Use the camera or tap a button. Move left for Scissors, center for Rock, or right for Paper.</p></div>
+        <div class="guide-step"><span>01</span><h3>Make a hand sign</h3><p>Show ✊ Rock, ✋ Paper, or ✌ Scissors to the camera. You can also tap a button.</p></div>
         <div class="guide-step"><span>02</span><h3>Luma responds</h3><p>Luma picks her own move and says exactly what she chose: Rock, Paper, or Scissors.</p></div>
         <div class="guide-step"><span>03</span><h3>Find the winner</h3><p>Rock beats Scissors. Scissors beats Paper. Paper beats Rock. The scoreboard tracks every round.</p></div>
       </section>
@@ -77,26 +78,26 @@
             <div class="camera-placeholder" id="cameraPlaceholder"><div class="camera-orbit">◌</div><p>Camera is sleeping</p><span>Tap start camera to invite Luma in.</span></div>
             <div class="scan-line"></div>
             <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
-            <div class="gesture-readout" id="gestureReadout"><span class="readout-label">MOTION SIGNAL</span><strong id="gestureValue">Waiting...</strong></div>
+            <div class="gesture-readout" id="gestureReadout"><span class="readout-label">HAND SIGNAL</span><strong id="gestureValue">Waiting...</strong></div>
           </div>
-          <div class="camera-footer"><span><i class="tiny-dot"></i> <span id="cameraStatus">Permission required</span></span><span class="mono">GESTURES: LEFT / CENTER / RIGHT</span></div>
+          <div class="camera-footer"><span><i class="tiny-dot"></i> <span id="cameraStatus">Permission required</span></span><span class="mono">HAND SIGNS: ✊ / ✋ / ✌</span></div>
         </div>
 
         <div class="match-panel">
           <div class="section-heading"><div><p class="eyebrow">LIVE MATCH</p><h2>Vs. Luma</h2></div><span class="round-count">ROUND <strong id="roundNumber">01</strong></span></div>
           <div class="versus-stage">
-            <div class="player-pod"><div class="pod-orb user-orb" id="userChoice">?</div><span class="pod-name">YOU</span><span class="pod-score" id="userScore">00</span></div>
+            <div class="player-pod"><span class="hand-label">YOUR HAND</span><div class="pod-orb user-orb" id="userChoice">✋</div><span class="pod-name">YOU</span><span class="pod-score" id="userScore">00</span></div>
             <div class="versus-mark">VS</div>
-            <div class="player-pod"><div class="pod-orb bot-orb" id="botChoice">✦</div><span class="pod-name">LUMA</span><span class="pod-score" id="botScore">00</span></div>
+            <div class="player-pod"><span class="hand-label">LUMA'S AI HAND</span><div class="pod-orb bot-orb" id="botChoice">✋</div><span class="pod-name">LUMA</span><span class="pod-score" id="botScore">00</span></div>
           </div>
-          <div class="match-message" id="matchMessage">Make your move when you feel it.</div>
+          <div class="match-message" id="matchMessage">Choose a move to reveal both hands.</div>
           <div class="luma-says" aria-live="polite"><span class="luma-says-label">LUMA SAYS</span><strong id="lumaSays">I’m waiting for your move...</strong></div>
           <div class="move-controls" aria-label="Choose a move">
-            <button class="move-button" data-move="rock"><span class="move-icon">●</span><span>Rock</span><small>CENTER</small></button>
-            <button class="move-button" data-move="paper"><span class="move-icon">▤</span><span>Paper</span><small>RIGHT</small></button>
-            <button class="move-button" data-move="scissors"><span class="move-icon">✣</span><span>Scissors</span><small>LEFT</small></button>
+            <button class="move-button" data-move="rock"><span class="move-icon">✊</span><span>Rock</span><small>HAND SIGN</small></button>
+            <button class="move-button" data-move="paper"><span class="move-icon">✋</span><span>Paper</span><small>HAND SIGN</small></button>
+            <button class="move-button" data-move="scissors"><span class="move-icon">✌</span><span>Scissors</span><small>HAND SIGN</small></button>
           </div>
-          <p class="control-hint">Camera gestures work best with a clear background. Buttons are always ready.</p>
+          <p class="control-hint">Hold one clear hand sign in the camera. Buttons are always ready.</p>
         </div>
       </section>
 
@@ -109,6 +110,8 @@
     <footer><span>RPS ORBIT / 2026</span><span>MADE FOR QUICK THINKERS</span><span>CAMERA DATA STAYS IN YOUR BROWSER</span></footer>
   </div>
   <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ const lumaIntro = document.querySelector('#lumaIntro');
 const playWithLuma = document.querySelector('#playWithLuma');
 const meetLater = document.querySelector('#meetLater');
 
-const moves = { rock: { icon: '●', label: 'Rock' }, paper: { icon: '▤', label: 'Paper' }, scissors: { icon: '✣', label: 'Scissors' } };
+const moves = { rock: { icon: '✊', label: 'Rock' }, paper: { icon: '✋', label: 'Paper' }, scissors: { icon: '✌', label: 'Scissors' } };
 const gestureMoves = ['scissors', 'rock', 'paper'];
 const quotes = [
   'I’ll go easy on you.<br>Probably.',
@@ -38,6 +38,8 @@ let motionLoop;
 let lastGestureAt = 0;
 let scores = { user: 0, bot: 0, round: 1 };
 let audioOn = true;
+let handTracker;
+let handCamera;
 
 function showToast(message) {
   toast.textContent = message;
@@ -96,11 +98,54 @@ async function startCamera() {
     startButton.innerHTML = '<span class="play-symbol">■</span> Camera live';
     startButton.disabled = true;
     startButton.style.opacity = '.6';
-    motionLoop = window.requestAnimationFrame(readMotion);
+    startHandTracking();
   } catch (error) {
     cameraStatus.textContent = error.name === 'NotAllowedError' ? 'Permission declined' : 'Camera unavailable';
     showToast('Camera stayed private. You can still play with the buttons.');
   }
+}
+
+function isFingerOpen(landmarks, tip, joint) {
+  return landmarks[tip].y < landmarks[joint].y;
+}
+
+function recognizeHand(landmarks) {
+  const indexOpen = isFingerOpen(landmarks, 8, 6);
+  const middleOpen = isFingerOpen(landmarks, 12, 10);
+  const ringOpen = isFingerOpen(landmarks, 16, 14);
+  const pinkyOpen = isFingerOpen(landmarks, 20, 18);
+  const openCount = [indexOpen, middleOpen, ringOpen, pinkyOpen].filter(Boolean).length;
+  if (openCount >= 4) return 'paper';
+  if (indexOpen && middleOpen && !ringOpen && !pinkyOpen) return 'scissors';
+  if (openCount === 0 || openCount === 1) return 'rock';
+  return null;
+}
+
+function handleHandResults(results) {
+  const landmarks = results.multiHandLandmarks?.[0];
+  if (!landmarks) { gestureValue.textContent = 'Show your hand...'; return; }
+  const detectedMove = recognizeHand(landmarks);
+  if (!detectedMove) { gestureValue.textContent = 'Hold a clear sign...'; return; }
+  const handSymbol = moves[detectedMove].icon;
+  gestureValue.textContent = `${handSymbol} ${moves[detectedMove].label.toUpperCase()}`;
+  signalPercent.textContent = '100%';
+  const now = Date.now();
+  if (now - lastGestureAt > 1700) { lastGestureAt = now; playRound(detectedMove, 'camera'); }
+}
+
+function startHandTracking() {
+  if (!window.Hands || !window.Camera) {
+    cameraStatus.textContent = 'Hand tracker unavailable';
+    showToast('Hand tracking could not load. Use the move buttons instead.');
+    return;
+  }
+  handTracker = new Hands({ locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}` });
+  handTracker.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: .65, minTrackingConfidence: .65 });
+  handTracker.onResults(handleHandResults);
+  handCamera = new Camera(cameraFeed, { onFrame: async () => { await handTracker.send({ image: cameraFeed }); }, width: 640, height: 480 });
+  handCamera.start();
+  cameraStatus.textContent = 'Hand tracking ready';
+  gestureValue.textContent = 'Show ✊ ✋ or ✌';
 }
 
 function readMotion() {
@@ -119,7 +164,8 @@ function readMotion() {
     const intensity = Math.min(100, Math.round(total / 500));
     signalPercent.textContent = `${String(intensity).padStart(2, '0')}%`;
     if (intensity > 8) {
-      const direction = left > right * 1.25 ? 'LEFT' : right > left * 1.25 ? 'RIGHT' : 'CENTER';
+      const rawDirection = left > right * 1.25 ? 'LEFT' : right > left * 1.25 ? 'RIGHT' : 'CENTER';
+      const direction = rawDirection === 'LEFT' ? 'RIGHT' : rawDirection === 'RIGHT' ? 'LEFT' : 'CENTER';
       const detectedMove = gestureMoves[['LEFT', 'CENTER', 'RIGHT'].indexOf(direction)];
       gestureValue.textContent = `${direction} → ${moves[detectedMove].label.toUpperCase()}`;
       const now = Date.now();
